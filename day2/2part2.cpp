@@ -10,7 +10,10 @@ bool checkList(const vector<int>& list, int index){
         int t = 1;
         int c;
         vector<int> levels = list;
-        levels.erase(levels.begin()+index);
+        if(index!=-1)
+        {
+            levels.erase(levels.begin()+index);
+        }
 
         for(int i = 0; i<levels.size()-1; i++)
         {
@@ -44,12 +47,18 @@ int main ()
             ss >> temp;
             levels.push_back(temp);
         }
-        for(int i = 0; i<levels.size(); i++)
+
+        if(checkList(levels, -1))
         {
-            if(checkList(levels, i))
+            r+=1;
+        } else {
+            for(int i = 0; i<levels.size(); i++)
             {
-                r+=1;
-                break;
+                if(checkList(levels, i))
+                {
+                    r+=1;
+                    break;
+                }
             }
         }
     }

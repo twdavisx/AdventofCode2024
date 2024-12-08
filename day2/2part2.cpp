@@ -6,6 +6,26 @@
 
 using namespace std;
 
+bool checkList(const vector<int>& list, int index){
+        int t = 1;
+        int c;
+        vector<int> levels = list;
+        levels.erase(levels.begin()+index);
+
+        for(int i = 0; i<levels.size()-1; i++)
+        {
+            if(i == 0)
+            {
+                c = (levels[i] - levels[i+1] > 0);
+            }
+            if (abs(levels[i]-levels[i+1]) > 3 || (levels[i] - levels[i+1] > 0)!=c || (levels[i]-levels[i+1])==0)
+            {
+                return false;
+            }
+        }
+        return true;
+}
+
 int main ()
 {
 
@@ -24,48 +44,16 @@ int main ()
             ss >> temp;
             levels.push_back(temp);
         }
-        int t = 1;
-        int c;
-        bool skip = false;
-        int used = 0;
-        for(int i = 0; i<levels.size()-1; i++)
+        for(int i = 0; i<levels.size(); i++)
         {
-            if (skip == true) {skip = false; continue;}
-            if(i == 0)
+            if(checkList(levels, i))
             {
-                c = (levels[i] - levels[i+1] > 0);
-            }
-            if (abs(levels[i]-levels[i+1]) > 3 || (levels[i] - levels[i+1] > 0)!=c || (levels[i]-levels[i+1])==0)
-            {
-                if(used!=0)
-                {
-                    t=0;
-                    break;
-                }
-                if(i+2<levels.size())
-                {
-                    if (abs(levels[i]-levels[i+2]) > 3 || (levels[i] - levels[i+2] > 0)!=c || (levels[i]-levels[i+2])==0)
-                    {
-                        used = 1;
-                        t = 0;
-                        skip = true;
-                        break;
-                    }
-                }
-                if(i-1>=0)
-                {
-                    if (abs(levels[i-1]-levels[i+1]) > 3 || (levels[i-1] - levels[i+1] > 0)!=c || (levels[i-1]-levels[i+1])==0)
-                    {
-                        used = 1;
-                        t = 0;
-                        break;
-                    }                    
-                }
-                t = 0;
+                r+=1;
                 break;
             }
         }
-        r+=t;
     }
+
+
     cout << r << endl;
 }
